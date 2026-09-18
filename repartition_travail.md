@@ -1,6 +1,6 @@
 # Répartition du travail — projet 1
 
-Binôme : BAUDRAND Ethan & EL KAMEL Amine
+Binôme : BAUDRAND Ethan & EL KAMEL Mohamed Amine
 
 Les numéros de section renvoient à `docs/ENONCE.md`.
 
