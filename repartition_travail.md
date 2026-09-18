@@ -8,7 +8,7 @@ arguments (carte, scénario, dossier de données, trace à écrire), charge et
 valide les fichiers, lance la simulation et écrit la trace. Les numéros de
 section renvoient à `docs/ENONCE.md`.
 
-## Qui fait quoi
+## Qui fait quoi ?
 
 Les étapes 1 à 4 sont indépendantes : on les mène en parallèle.
 
