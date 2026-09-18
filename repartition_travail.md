@@ -98,7 +98,7 @@ Deux règles à respecter partout :
 
 Les étapes 1 à 4 sont indépendantes : on les mène en parallèle.
 
-### Étape 0 — Organisation du dépôt
+### Étape 0 — Organisation du dépôt.
 
 - Responsables : Ethan & Amine
 - Quoi : arborescence du dépôt (sa racine sera la racine de l'archive
