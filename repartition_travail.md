@@ -2,13 +2,99 @@
 
 Binôme : BAUDRAND Ethan & EL KAMEL Amine
 
-Le code vit dans le package `reconfort/`, un module par responsabilité.
-`agent.py`, à la racine, n'est qu'un point d'entrée : il lit les quatre
-arguments (carte, scénario, dossier de données, trace à écrire), charge et
-valide les fichiers, lance la simulation et écrit la trace. Les numéros de
-section renvoient à `docs/ENONCE.md`.
+Les numéros de section renvoient à `docs/ENONCE.md`.
 
-## Qui fait quoi ?
+## Architecture
+
+### Arborescence du dépôt
+
+```
+Projet1/                   racine du dépôt = racine de l'archive rendue
+├── agent.py               point d'entrée
+├── rendu.json             commande de lancement (section 2)
+├── README.md
+├── repartition_travail.md
+├── demo.py                démo fournie, à supprimer quand agent.py marchera
+├── reconfort/             le code du robot, un module par responsabilité
+├── tests/                 tests automatisés (section 8)
+├── cartes/                cartes et scénarios fournis, puis les nôtres
+├── donnees/               dictionnaire et armoire
+├── rapport/               rapport de 3 pages (section 11)
+└── docs/                  énoncé et documents du prof (ne pas modifier)
+```
+
+### Le point d'entrée : `agent.py`
+
+Il est lancé avec quatre arguments, dans cet ordre :
+
+```
+python agent.py <carte.json> <scenario.json> <dossier_donnees> <trace.json>
+```
+
+1. le chemin de la carte ;
+2. le chemin du scénario ;
+3. le dossier de données, qui contient `dictionnaire.json` et les armoires.
+   Le fichier d'armoire à charger est `<dossier>/<scenario["armoire"]>.json` :
+   ne jamais écrire `armoire_standard` en dur ;
+4. le chemin de la trace à écrire.
+
+`agent.py` reste très court : il lit les arguments, charge et valide les
+fichiers, construit le simulateur et le robot, lance la simulation, écrit la
+trace et renvoie le code de retour (0 si tout va bien, non nul en cas
+d'erreur de données). Toute la logique vit dans `reconfort/`.
+
+### Les modules de `reconfort/`
+
+- `reconfort_io.py` (fourni) : lecture des fichiers JSON (ne vérifie que
+  `format` et `version`), `normaliser` pour découper un message en mots,
+  classe `Trace` pour écrire la sortie.
+- `validation.py` : toutes les vérifications de la section 5.6, avant la
+  simulation. A le droit de lire `grille` pour vérifier les symboles.
+- `simulateur.py` : la réalité. Perception, contenu du casier courant,
+  légalité et application des actions. **Seul module à utiliser `grille` et
+  `objet`.**
+- `structures.py` : la file (parcours en largeur) et le cycle à 8 éléments
+  (roue des émotions, colonnes de l'armoire).
+- `carte_mentale.py` : **mémoire** du robot sur l'appartement (cases
+  inconnues, libres, obstacles).
+- `planification.py` : **décision**, parcours en largeur sur la carte
+  mentale.
+- `dictionnaire.py` : **décision**, message → (émotion, intensité), ou
+  émotion indéterminée (section 6.1).
+- `armoire.py` : **mémoire** et **décision** côté armoire. Liste ordonnée
+  des 15 casiers candidats (section 6.2), trajet du sélecteur, casiers déjà
+  vus.
+- `robot.py` : l'agent. Cycle percevoir → mémoriser → décider → agir, et
+  enchaînement d'une demande (dictionnaire → armoire → résident).
+- `affichage.py` : dessin de la grille dans le terminal, pour le débogage et
+  la vidéo. Ne fait pas partie de l'agent.
+
+### Qui parle à qui
+
+```
+agent.py ──► reconfort_io (lecture) ──► validation
+   │
+   ├──► simulateur        la réalité : grille, objets des casiers
+   │       ▲        │
+   │     action   perception (4 cases voisines, contenu du casier)
+   │       │        ▼
+   └──► robot             l'agent : ne connaît que ses perceptions
+           ├── carte_mentale + planification
+           ├── dictionnaire
+           ├── armoire
+           └──► Trace     un pas par action, une livraison par demande
+```
+
+Deux règles à respecter partout :
+
+- le robot ne reçoit **jamais** le dictionnaire `carte` complet ni le champ
+  `objet`. Il reçoit seulement ses connaissances de départ (dimensions, sa
+  position, positions de l'armoire, du dictionnaire et des résidents,
+  étiquettes des casiers) puis, à chaque tour, sa perception ;
+- aucune variable globale : au projet 2, plusieurs robots partageront le
+  même simulateur.
+
+## Qui fait quoi ?  
 
 Les étapes 1 à 4 sont indépendantes : on les mène en parallèle.
 
