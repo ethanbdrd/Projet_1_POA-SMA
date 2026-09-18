@@ -1,6 +1,6 @@
 # Répartition du travail — projet 1
 
-Binôme : BAUDRAND Ethan & EL KAMEL Amine
+Binôme : BAUDRAND Ethan & EL KAMEL Mohamed Amine
 
 Les numéros de section renvoient à `docs/ENONCE.md`.
 
@@ -43,7 +43,7 @@ fichiers, construit le simulateur et le robot, lance la simulation, écrit la
 trace et renvoie le code de retour (0 si tout va bien, non nul en cas
 d'erreur de données). Toute la logique vit dans `reconfort/`.
 
-### Les modules de `reconfort/`
+### Les modules de `reconfort/` 
 
 - `reconfort_io.py` (fourni) : lecture des fichiers JSON (ne vérifie que
   `format` et `version`), `normaliser` pour découper un message en mots,
