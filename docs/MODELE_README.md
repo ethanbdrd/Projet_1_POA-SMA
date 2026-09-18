@@ -44,4 +44,4 @@ votre faveur.*
 
 ## Vidéo
 
-`demo.mp4` (ou le lien), également déclarée dans `rendu.json`.
+`demo.mp4` (ou le lien), également déclarée dans `../rendu.json`.

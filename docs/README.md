@@ -32,9 +32,9 @@ le squelette : à vous de le remplir.
 Les quatre arguments sont exactement ceux du contrat d'appel de l'énoncé
 (section 2) : carte, scénario, dossier de données, trace à écrire. Votre
 programme devra les accepter dans le même ordre, et vous déclarerez la
-commande qui le lance dans `rendu.json`.
+commande qui le lance dans `../rendu.json`.
 
-## Ce que `reconfort_io.py` fait, et ne fait pas
+## Ce que `../reconfort/reconfort_io.py` fait, et ne fait pas
 
 **Fait** : ouvrir les fichiers, signaler proprement un fichier absent, mal
 encodé ou syntaxiquement invalide, vérifier les champs `format` et

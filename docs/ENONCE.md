@@ -36,12 +36,12 @@ propre au premier rendu vous fera gagner beaucoup de temps au second.
 Une archive `NOM1_NOM2.zip` contenant, à sa racine :
 
 1. **le code source** de votre robot ;
-2. **un fichier `rendu.json`** décrivant comment lancer votre programme
+2. **un fichier `../rendu.json`** décrivant comment lancer votre programme
    (voir plus bas) ;
 3. **vos tests**, et la commande qui les lance, indiquée dans le README ;
 4. **un README** : comment lancer, comment tester, ce qui marche, ce qui ne
    marche pas. Un squelette à recopier vous est fourni dans
-   `robot-reconfort/base_fournie/MODELE_README.md` ;
+   `MODELE_README.md` ;
 5. **un rapport** de 3 pages maximum (section 11) ;
 6. **une vidéo de démonstration** de 1 min 30 maximum (section 2 bis) ;
 7. **le dépôt Git** de votre travail (dossier `.git` inclus, ou une URL).
@@ -58,7 +58,7 @@ Le dossier de données contient `dictionnaire.json` et un ou plusieurs
 fichiers d'armoire ; **le nom de l'armoire à utiliser est donné par le
 scénario**, pas par le nom du dossier. Ne codez en dur aucun chemin.
 
-Vous déclarez la commande de lancement dans `rendu.json` :
+Vous déclarez la commande de lancement dans `../rendu.json` :
 
 ```json
 {
@@ -88,7 +88,7 @@ Python est conseillé et une base de code vous est fournie en Python
 c'est à vous de réimplémenter la lecture des fichiers et l'écriture de la
 trace en respectant exactement les formats de la section 5. Le contrat
 d'appel, lui, est le même pour tout le monde — c'est justement à ça que sert
-`rendu.json`.
+`../rendu.json`.
 
 Rien n'exige un système particulier : tout se fait avec quatre arguments de
 ligne de commande, qui s'écrivent pareil sous Windows, macOS et Linux.
@@ -115,7 +115,7 @@ quelques secondes.
 
 Format libre — mp4, mkv, gif animé — joint à l'archive, ou lien accessible
 sans compte. Dans les deux cas, déclarez-le dans le champ `video` de votre
-`rendu.json`.
+`../rendu.json`.
 
 ---
 
@@ -582,7 +582,7 @@ cartes/appartement_01..05.json
 cartes/scenario_01..05.json
 ```
 
-`reconfort_io.py` fait **deux choses** : lire les entrées et écrire la
+`../reconfort/reconfort_io.py` fait **deux choses** : lire les entrées et écrire la
 trace. Il ne contient ni planification, ni fouille, ni règle de repli, ni
 boucle de décision — c'est votre travail. Ses validations sont volontairement
 minimales : il vérifie l'en-tête `format`/`version` et rien d'autre. Tout ce
@@ -606,7 +606,7 @@ python demo.py cartes/appartement_01.json cartes/scenario_01.json donnees sortie
 
 Les cinq cartes et scénarios fournis servent à travailler. **La correction
 utilise en plus des jeux que vous n'aurez pas vus**, exécutés via votre
-`rendu.json`. Ils comportent notamment un appartement plus grand, une
+`../rendu.json`. Ils comportent notamment un appartement plus grand, une
 armoire dont une colonne entière est vide, un résident inaccessible, et les
 vingt-deux fichiers cassés de la section 5.6.
 
