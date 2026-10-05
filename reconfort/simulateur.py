@@ -1,6 +1,8 @@
+import copy
+
 DEPLACEMENTS = {"N": (-1, 0), "S": (1, 0), "E": (0, 1), "O": (0, -1)}
 
-SYMBOLES = {
+TYPE_PAR_SYMBOLE = {
     "#": "mur",
     ".": "libre",
     "R": "libre",
@@ -8,9 +10,6 @@ SYMBOLES = {
     "D": "dictionnaire",
     "P": "resident",
 }
-
-NB_LIGNES_ARMOIRE = 3    #faible, moyen, fort
-NB_COLONNES_ARMOIRE = 8  #les 8 sentiments de roue de
 
 
 class Simulateur :
@@ -22,6 +21,9 @@ class Simulateur :
 
         self.hauteur = len(self.__grille)
         self.largeur = len(self.__grille[0])
+
+        self.nbLignesArmoire = len(armoire["intensites"])    #faible, moyenne, forte
+        self.nbColonnesArmoire = len(armoire["emotions"])    #les 8 emotions de la roue
 
         self.posArmoire = tuple(carte["armoire"]["position"])
         self.posDictionnaire = tuple(carte["dictionnaire"]["position"])
@@ -62,7 +64,7 @@ class Simulateur :
         self.objetPorte = None
 
     def infos_initiales(self) :
-        return self.__infos
+        return copy.deepcopy(self.__infos)
 
     def percevoir(self) :
         perception = {}
@@ -137,10 +139,10 @@ class Simulateur :
         ligne, colonne = self.casier
         dl, dc = DEPLACEMENTS[direction]
         nouvelleLigne = ligne+dl
-        if nouvelleLigne < 0 or nouvelleLigne >= NB_LIGNES_ARMOIRE :
+        if nouvelleLigne < 0 or nouvelleLigne >= self.nbLignesArmoire :
             raise Exception("Impossible de chercher : les lignes de l'armoire ne bouclent pas")
         else :
-            nouvelleColonne = (colonne+dc)%NB_COLONNES_ARMOIRE
+            nouvelleColonne = (colonne+dc)%self.nbColonnesArmoire
             self.casier = (nouvelleLigne, nouvelleColonne)
 
 
@@ -183,11 +185,10 @@ class Simulateur :
         if ligne < 0 or ligne >= self.hauteur or colonne < 0 or colonne >= self.largeur :
             return "mur"
         else :
-            return SYMBOLES[self.__grille[ligne][colonne]]
+            return TYPE_PAR_SYMBOLE[self.__grille[ligne][colonne]]
 
 
 
     def __adjacentA(self, cible) :
         ligne, colonne = self.position
-        return abs(ligne-cible[0]) + abs(colonne-cible[1]) == 1 
-
+        return abs(ligne-cible[0]) + abs(colonne-cible[1]) == 1
