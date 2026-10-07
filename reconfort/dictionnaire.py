@@ -1,5 +1,3 @@
-"""Lecture de l'emotion d'un message (enonce 6.1)."""
-
 from reconfort.reconfort_io import normaliser
 
 def construire_index(dictionnaire):
