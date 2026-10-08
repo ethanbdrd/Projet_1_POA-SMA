@@ -35,8 +35,6 @@ def position(coordonnees, nomPosition, nomFichier, hauteur, largeur):
     return coordonnees
 
 
-
-
 def version(donnees, fichier) :
     if type(donnees.get("version")) is not int or donnees["version"] != 1 :
         raise ErreurValidation(fichier + " : version invalide")
@@ -61,7 +59,7 @@ def valider_carte(carte) :
         if len(ligne) != len(grille[0]) :
             raise ErreurValidation("carte : grille non rectangulaire")
 
-        for symbole in ligne : 
+        for symbole in ligne :
             if symbole not in SYMBOLES_VALIDES :
                 raise ErreurValidation("carte : Symbole inconnu " + symbole)
 
@@ -69,7 +67,7 @@ def valider_carte(carte) :
         raise ErreurValidation("carte : Dimensions incohérentes avec la grille")
 
 
-    #Verif que tous les cote d ela grille soit des #
+    # Verifier que tous les cote de la grille soit des #
 
     for ligne in grille :
         if ligne[0] != "#" or ligne[-1] != "#" :
@@ -90,9 +88,9 @@ def valider_carte(carte) :
         raise ErreurValidation("carte : le depart du robot n'est pas sur R")
 
     for element, symbole in (("armoire", "A"), ("dictionnaire", "D")) :
-        bloc = champ(carte, element, dict, "carte")         # la position de l'armoire 
+        bloc = champ(carte, element, dict, "carte")         # la position de l'armoire
         coordonnees= champ(bloc, "position", list, "carte")
-        position(coordonnees, element, "carte", hauteur, largeur)   #Verification 
+        position(coordonnees, element, "carte", hauteur, largeur)   #Verification
         ligne=coordonnees[0]
         colonne=coordonnees[1]
 
@@ -109,7 +107,7 @@ def valider_carte(carte) :
         identifiant=champ(resident,"id",str,"carte")
         champ(resident,"nom",str,"carte")
         coordonnees=champ(resident,"position",list,"carte")
-        position(coordonnees, identifiant , "carte", hauteur, largeur) 
+        position(coordonnees, identifiant , "carte", hauteur, largeur)
         ligne=coordonnees[0]
         colonne=coordonnees[1]
         if grille[ligne][colonne] != "P":
@@ -154,7 +152,7 @@ def valider_armoire(armoire, dictionnaire) :
 
 
 
-def valider_scenario(scenario, carte) :  
+def valider_scenario(scenario, carte) :
     version(scenario, "scénario")
     champ(scenario, "nom", str, "scénario")
     champ(scenario, "armoire", str, "scénario")
