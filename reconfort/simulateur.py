@@ -22,7 +22,7 @@ class Simulateur :
         self.hauteur = len(self.__grille)
         self.largeur = len(self.__grille[0])
 
-        self.nbLignesArmoire = len(armoire["intensites"])    #faible, moyenne, forte
+        self.nbLignesArmoire = len(armoire["intensites"])    # faible, moyenne, forte
         self.nbColonnesArmoire = len(armoire["emotions"])    #les 8 emotions de la roue
 
         self.posArmoire = tuple(carte["armoire"]["position"])
@@ -48,7 +48,7 @@ class Simulateur :
                 "intensite": casier["intensite"],
             })
 
-        self.__infos = {  #Ce que le robot a le droit de voir comme informations 
+        self.__infos = {  # Ce que le robot a le droit de voir comme informations
             "hauteur": carte["dimensions"]["hauteur"],
             "largeur": carte["dimensions"]["largeur"],
             "depart": tuple(carte["depart_robot"]),
@@ -103,7 +103,7 @@ class Simulateur :
             for c in range(self.largeur) :
                 if (l, c) == self.position :
                     ligne += "R"
-                elif self.__grille[l][c] == "R" : #Qd le robot n'y est pas 
+                elif self.__grille[l][c] == "R" : #Qd le robot n'y est pas
                     ligne += "."
                 else :
                     ligne += self.__grille[l][c]
