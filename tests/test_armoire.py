@@ -19,7 +19,7 @@ class TestCandidats(unittest.TestCase):
         self.assertEqual(len(casiers), 15)
         self.assertEqual(len(set(casiers)), 15)
 
-    def test_exemple_annexe_c5(self) :
+    def test_exemple_annexe_c5(self) : #Exemple dasn l'enonce avec demande de surprise / forte dont toute la colonne est vide.
         self.assertEqual(self.casiers("surprise", "forte")[:5], [(2, 3), (1, 3), (0, 3), (2, 4), (2, 2)])
 
     def test_premier_candidat_est_le_casier_exact(self) :
@@ -37,7 +37,7 @@ class TestCandidats(unittest.TestCase):
             colonnes.add(colonne)
         self.assertEqual(colonnes, {6, 7, 0, 1, 2})
 
-    def test_replis(self) :
+    def test_replis(self) : #Ici on s'interesse aux emotions(colonnes)
         replis = dict(candidats("surprise", "forte", self.emotions, self.intensites))
         self.assertEqual(replis[(2, 3)], "aucun")
         self.assertEqual(replis[(1, 3)], "intensite")
@@ -55,7 +55,7 @@ class TestTrajet(unittest.TestCase):
         self.assertEqual(trajet((1, 0), (2, 0), 3, 8), ["S"])
         self.assertEqual(trajet((2, 3), (0, 3), 3, 8), ["N", "N"])
 
-    def test_lignes_puis_colonnes(self) :
+    def test_lignes_puis_colonnes(self) : #les déplacements verticaux sont faits avant les horizontaux
         self.assertEqual(trajet((1, 0), (2, 2), 3, 8), ["S", "E", "E"])
 
     def test_par_le_bouclage(self) :
@@ -65,7 +65,7 @@ class TestTrajet(unittest.TestCase):
     def test_egalite(self) :
         self.assertEqual(trajet((1, 0), (1, 4), 3, 8), ["E", "E", "E", "E"])
 
-    def test_hors_armoire(self) :
+    def test_hors_armoire(self) : #une cible en dehors de l'armoire est refusée
         with self.assertRaises(Exception) :
             trajet((1, 0), (3, 0), 3, 8)
 
