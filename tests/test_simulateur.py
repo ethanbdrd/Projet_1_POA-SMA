@@ -146,6 +146,5 @@ class TestSimulateur(unittest.TestCase):
                 self.assertNotIn('"grille"', texte, fichier.name)
                 self.assertNotIn('"objet"', texte, fichier.name)
 
-
 if __name__ == "__main__" :
     unittest.main()
