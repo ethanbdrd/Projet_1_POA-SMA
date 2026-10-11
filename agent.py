@@ -9,6 +9,8 @@ import sys
 from pathlib import Path
 
 from reconfort import reconfort_io as rio
+from reconfort.robot import Robot
+from reconfort.simulateur import Simulateur
 from reconfort.validation import (
     ErreurValidation,
     valider_armoire,
@@ -49,9 +51,14 @@ def main(argv) :
     except (rio.ErreurFichier, ErreurValidation) as erreur :
         print("erreur : " + str(erreur), file=sys.stderr)
         return 1
-
-    print(carte["nom"] + " / " + scenario["nom"] + " : " + str(len(scenario["demandes"])) + " demandes, fichiers valides")
+    sim = Simulateur(carte, armoire)
+    trace = rio.Trace(carte["nom"], scenario["nom"], ["BAUDRAND Ethan", "EL KAMEL Mohamed Amine"])
+    robot = Robot(sim.infos_initiales(), sim, trace, dictionnaire)
+    for demande in scenario["demandes"]:
+        robot.executer_demande(demande["numero"], demande["resident"], demande["message"])
+    trace.ecrire(cheminSortie)
     return 0
+
 
 
 if __name__ == "__main__" :
