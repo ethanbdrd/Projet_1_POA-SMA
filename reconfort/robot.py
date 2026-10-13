@@ -17,6 +17,7 @@ class Robot:
         self.demande = None
         self.objet_porte = None
         self.est_traversable = predicat_optimiste(self.carte)
+        self.residents_atteints = set()
 
     def executer_demande(self, numero, resident, message):
         self.demande = numero
@@ -30,6 +31,9 @@ class Robot:
             self.trace.ajouter_livraison(demande=self.demande, resident=resident, emotion=None, intensite=None, succes=False, motif_echec="emotion indeterminee", repli="aucun", objet=None, casier_choisi=None)
             return
         emotion, intensite = resultat
+        if not self.resident_accessible(resident) :
+            self.trace.ajouter_livraison(demande=self.demande, resident=resident, emotion=emotion, intensite=intensite, succes=False, motif_echec="resident inaccessible", repli="aucun", objet=None, casier_choisi=None)
+            return
         armoire_accessible = self.aller_a(self.carte.position_armoire)
         if armoire_accessible is False :
             self.trace.ajouter_livraison(demande=self.demande, resident=resident, emotion=emotion, intensite=intensite,objet=None, succes=False, motif_echec="armoire inaccessible", casier_choisi=None,repli="aucun")
@@ -61,6 +65,13 @@ class Robot:
             if len(chemin) == 1 : return True
             else :
                 self.agir("AVANCER", direction_entre(chemin[0], chemin[1]))
+
+    def resident_accessible(self, resident) :
+        if resident in self.residents_atteints : return True
+        if self.aller_a(self.residents[resident]) :
+            self.residents_atteints.add(resident)
+            return True
+        return False
 
     def fouiller(self, emotion, intensite):
         self.percevoir()

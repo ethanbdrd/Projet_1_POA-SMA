@@ -132,6 +132,7 @@ class TestRobot(unittest.TestCase):
         self.assertEqual(actions.count("CONSULTER"), 2)
         self.assertEqual(actions.count("PRENDRE"), 2)
         self.assertEqual(actions.count("DONNER"), 2)
+        self.assertIn("R1", self.robot.residents_atteints)
 
     def test_echecs(self):
         self.robot.executer_demande(1, "R1", "bonjour comment allez vous")
@@ -143,6 +144,24 @@ class TestRobot(unittest.TestCase):
 
         for livraison in self.trace.livraisons:
             self.assertFalse(livraison["succes"])
+
+    def test_executer_demande_resident_inaccessible(self):
+        grille = [
+            "#######",
+            "#R.A.##",
+            "#..##P#",
+            "#D...##",
+            "#######",
+        ]
+        self.preparer(grille=grille)
+        self.robot.executer_demande(1, "R1", "je suis triste ce soir")
+        self.robot.executer_demande(2, "R1", "je suis triste ce soir")
+
+        self.assertEqual(self.trace.livraisons[0]["motif_echec"], "resident inaccessible")
+        self.assertEqual(len(self.trace.livraisons), 2)
+        actions = [pas["action"] for pas in self.trace.pas]
+        self.assertEqual(actions.count("PRENDRE"), 0)
+
 
     def test_rejeu_de_la_trace(self):
         self.robot.executer_demande(1, "R1", "je suis triste ce soir")
