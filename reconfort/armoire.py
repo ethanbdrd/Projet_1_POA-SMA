@@ -1,3 +1,4 @@
+"""Choix du casier et deplacement du selecteur """
 from reconfort.structures import Cycle
 
 # Niveau de repli par rapport au casier idéal : même intensité, autre intensité ou émotion voisine
@@ -5,7 +6,8 @@ DISTANCE_MAX = 2
 REPLIS_VOISINES = {1: "voisine_1", 2: "voisine_2"}
 
 
-def candidats(emotion, intensite, emotions, intensites): #A partir de ce que ressent le résident, elle donne la liste des 15 casiers acceptables, rangés du meilleur au moins bon, pour que le robot sache dans quel ordre les fouiller.
+def candidats(emotion, intensite, emotions, intensites):
+    """A partir de ce que ressent le résident, elle donne la liste des 15 casiers acceptables, rangés du meilleur au moins bon, pour que le robot sache dans quel ordre les fouiller."""
     roue = Cycle(emotions)
     indice_intensite = intensites.index(intensite)
     liste = []
@@ -29,16 +31,23 @@ def candidats(emotion, intensite, emotions, intensites): #A partir de ce que res
         resultat.append((casier, repli))
     return resultat
 
+def _verifier_casier(casier, nb_lignes, nb_colonnes):
+    """Leve ValueError si le casier n'est pas dans l'armoire."""
+    if not (0 <= casier[0] < nb_lignes and 0 <= casier[1] < nb_colonnes):
+        raise ValueError("Casier hors de l'armoire : " + str(casier))
 
-def trajet(casier, cible, nb_lignes, nb_colonnes): #Les directions CHERCHER pour aller de casier a cible par le chemin le plus court où un selecteur va passer d'un casier a un autre .
-    if not (0 <= cible[0] < nb_lignes and 0 <= cible[1] < nb_colonnes) :#Cas casier n exite pas
-        raise Exception("Casier hors de l'armoire : " + str(cible))
+
+def trajet(casier, cible, nb_lignes, nb_colonnes):
+    """Les directions CHERCHER pour aller de casier a cible par le chemin le plus court où un selecteur va passer d'un casier a un autre """
+    _verifier_casier(casier, nb_lignes, nb_colonnes)
+    _verifier_casier(cible, nb_lignes, nb_colonnes)
     directions = []
 
+    # positif : cible plus bas ; negatif : cible plus haut ; 0 : meme ligne
     ecart_lignes = cible[0] - casier[0]
-    if ecart_lignes > 0 : #positif cible plsu bas , negatif cible plsu haut ou bien meme ligne
+    if ecart_lignes > 0:
         directions += ["S"] * ecart_lignes
-    else :
+    else:
         directions += ["N"] * (-ecart_lignes)
 
     vers_est = (cible[1] - casier[1]) % nb_colonnes
@@ -52,16 +61,20 @@ def trajet(casier, cible, nb_lignes, nb_colonnes): #Les directions CHERCHER pour
     return directions
 
 
-class MemoireArmoire: # C'est le carnet de notes pour que a chaque passage d'un caiser a un autre il s'en souviens ce qu'il y a dedans.
+class MemoireArmoire:
+    """C'est le carnet de notes pour que a chaque passage d'un caiser a un autre il s'en souviens ce qu'il y a dedans."""
     def __init__(self, casier_depart):
         self.casier = casier_depart
         self.contenus = {}
 
-    def noter(self, casier, objet): #Le robot note le contenu d'un casier vu
+    def noter(self, casier, objet):
+        """Le robot note le contenu d'un casier vu"""
         self.contenus[casier] = objet
 
-    def est_connu(self, casier): #True si il a deja regarder ce casier False sinon
+    def est_connu(self, casier):
+        """True si il a deja regarder ce casier False sinon"""
         return casier in self.contenus
 
-    def contenu(self, casier): #Le nom de l'objet ou None s'il est vide ou jamais vu
+    def contenu(self, casier):
+        """Le nom de l'objet ou None s'il est vide ou jamais vu"""
         return self.contenus.get(casier)
