@@ -1,7 +1,7 @@
 import unittest
 
 from reconfort.dictionnaire import *
-
+import reconfort.dictionnaire as module_dictionnaire
 
 class TestDictionnaire(unittest.TestCase):
     def setUp(self) :
@@ -19,6 +19,15 @@ class TestDictionnaire(unittest.TestCase):
         self.assertEqual(index["seule"], ("tristesse", "moyenne"))
         self.assertEqual(index["inquiet"], ("peur", "faible"))
         self.assertEqual(len(index), 8)
+
+    def test_index_construit_une_seule_fois(self) :
+        lire_emotion("seule", self.dictionnaire)
+        self.assertIs(module_dictionnaire._dernier_dictionnaire, self.dictionnaire)
+        premier = index_de(self.dictionnaire)
+        self.assertIs(index_de(self.dictionnaire), premier)
+        autre = {"entrees": [{"formes": ["calme"], "emotion": "joie", "intensite": "faible"}]}
+        self.assertIsNot(index_de(autre), premier)
+        self.assertEqual(lire_emotion("tres calme", autre), ("joie", "faible"))
 
     def test_mot_reconnu(self) :
         self.assertEqual(lire_emotion("Je me sens seule ce soir.", self.dictionnaire), ("tristesse", "moyenne"))
