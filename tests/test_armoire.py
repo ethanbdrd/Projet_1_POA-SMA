@@ -65,9 +65,15 @@ class TestTrajet(unittest.TestCase):
     def test_egalite(self) :
         self.assertEqual(trajet((1, 0), (1, 4), 3, 8), ["E", "E", "E", "E"])
 
-    def test_hors_armoire(self) : #une cible en dehors de l'armoire est refusée
-        with self.assertRaises(Exception) :
+    def test_hors_armoire(self) :
+        with self.assertRaises(ValueError) :
             trajet((1, 0), (3, 0), 3, 8)
+
+    def test_depart_hors_armoire(self) :
+        with self.assertRaises(ValueError) :
+            trajet((3, 0), (1, 0), 3, 8)
+        with self.assertRaises(ValueError) :
+            trajet((1, 8), (1, 0), 3, 8)
 
 
 class TestMemoireArmoire(unittest.TestCase):
