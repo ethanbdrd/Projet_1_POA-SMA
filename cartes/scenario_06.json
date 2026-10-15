@@ -1,0 +1,54 @@
+{
+  "format": "robot-reconfort/scenario",
+  "version": 1,
+  "nom": "scenario_06",
+  "carte": "appartement_06",
+  "armoire": "armoire_standard",
+  "demandes": [
+    {
+      "numero": 1,
+      "resident": "R1",
+      "message": "Je me sens tellement seule ce soir, personne n'est passé."
+    },
+    {
+      "numero": 2,
+      "resident": "R3",
+      "message": "Je suis un peu inquiet, j'entends du bruit dans le couloir."
+    },
+    {
+      "numero": 3,
+      "resident": "R2",
+      "message": "Ce bouton est cassé, ça m'agace depuis hier."
+    },
+    {
+      "numero": 4,
+      "resident": "R4",
+      "message": "Ma fille a appelé, je suis vraiment heureux."
+    },
+    {
+      "numero": 5,
+      "resident": "R1",
+      "message": "Je me sens calme aujourd'hui."
+    },
+    {
+      "numero": 6,
+      "resident": "R2",
+      "message": "Je suis sidéré, la télévision s'est allumée toute seule."
+    },
+    {
+      "numero": 7,
+      "resident": "R3",
+      "message": "Bonjour, quelle heure est-il ?"
+    },
+    {
+      "numero": 8,
+      "resident": "R4",
+      "message": "Je me sens seule depuis ce matin."
+    },
+    {
+      "numero": 9,
+      "resident": "R2",
+      "message": "Je suis gai, mon petit-fils vient me voir."
+    }
+  ]
+}
