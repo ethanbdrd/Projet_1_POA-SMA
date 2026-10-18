@@ -4,7 +4,7 @@ Projet de semestre, master informatique. Un robot à perception locale
 consulte un dictionnaire, fouille une armoire et rapporte un objet à un
 résident.
 
-Langage : Python — Version : 3.10 ou plus
+Langage : Python — Version : 3.9 ou plus
 
 ## Lancer
 
