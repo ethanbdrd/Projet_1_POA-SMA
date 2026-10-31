@@ -97,4 +97,9 @@ chaque fusion.
 
 ## Vidéo
 
-`demo.mov`, à la racine du dépôt, également déclarée dans `rendu.json`.
+`demo.mp4`, à la racine du dépôt, également déclarée dans `rendu.json`.
+
+## Dépôt Git
+
+L'historique n'est pas joint à l'archive pour en limiter la taille. Il est
+disponible ici : https://github.com/ethanbdrd/Projet_1_POA-SMA
