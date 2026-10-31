@@ -9,13 +9,13 @@ Langage : Python — Version : 3.9 ou plus
 ## Lancer
 
 ```
-python agent.py <carte.json> <scenario.json> <dossier_donnees> <trace_sortie.json>
+python3 agent.py <carte.json> <scenario.json> <dossier_donnees> <trace_sortie.json>
 ```
 
 Exemple :
 
 ```
-python agent.py cartes/appartement_01.json cartes/scenario_01.json donnees sortie.json
+python3 agent.py cartes/appartement_01.json cartes/scenario_01.json donnees sortie.json
 ```
 
 Si un fichier est absent ou invalide, l'agent affiche un message d'erreur
@@ -24,7 +24,7 @@ sur la sortie d'erreur, renvoie un code non nul et n'écrit aucune trace.
 ## Tester
 
 ```
-python -m unittest discover tests
+python3 -m unittest discover tests
 ```
 
 Les tests couvrent chaque module (validation, simulateur, structures,
